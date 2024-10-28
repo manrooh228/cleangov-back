@@ -6,7 +6,7 @@ import jakarta.transaction.Transactional;
 import kz.cleangov.cleangov.domain.Users;
 import kz.cleangov.cleangov.exception.InvalidCredentialsException;
 import kz.cleangov.cleangov.exception.UserAlreadyExistsException;
-import kz.cleangov.repo.UserRepo;
+import kz.cleangov.cleangov.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
