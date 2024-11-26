@@ -17,15 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
     private final UserRepo userRepo;
 
-    public String authenticateUser(String username, String password ){
+    public Users authenticateUser(String username, String password ){
         try {
             Users user = userRepo.findByUsername(username);
 
             if(user == null || !user.getPassword().equals(password)) {
                 throw new InvalidCredentialsException("Invalid username or password.");
             }
-
-            return "Login successful!";
+            
+            return user;
         } catch (Exception e) {
             log.error("Authentication error: {}", e.getMessage());
             throw e;

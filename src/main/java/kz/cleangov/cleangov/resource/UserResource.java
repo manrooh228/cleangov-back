@@ -24,16 +24,17 @@ public class UserResource {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequest request) {
-        try{
-            String result = userService.authenticateUser(request.getUsername(), request.getPassword());
-            return ResponseEntity.ok(result);
+    public ResponseEntity<Users> login(@RequestBody UserLoginRequest request) {
+        try {
+            Users user = userService.authenticateUser(request.getUsername(), request.getPassword());
+            return ResponseEntity.ok(user);
         } catch (InvalidCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
     
     @GetMapping("/check/{username}")
     public ResponseEntity<String> checkUserExists(@PathVariable String username) {
