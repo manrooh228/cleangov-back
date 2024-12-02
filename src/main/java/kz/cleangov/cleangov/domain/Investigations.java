@@ -28,6 +28,7 @@ public class Investigations {
 
     @Column(nullable = false, columnDefinition = "int default 0")
     private int progress;
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean completed;
 
     public void setProgress(int progress) {

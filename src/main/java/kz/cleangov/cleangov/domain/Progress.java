@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import kz.cleangov.cleangov.service.ProgressService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,12 +39,19 @@ public class Progress {
 
     private boolean completed;
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-        if (progress == 100) {
-            this.completed = true;
-        } else {
-            this.completed = false;
-        }
+    public void setProgress(int progress, ProgressService progressService) {
+    this.progress = progress;
+    boolean wasCompleted = this.completed;
+    if (progress == 100) {
+        this.completed = true;
+    } else {
+        this.completed = false;
     }
+
+    //progress service
+    if (!wasCompleted && this.completed) {
+        progressService.handleCompletedProgress(this);
+    }
+}
+
 }
