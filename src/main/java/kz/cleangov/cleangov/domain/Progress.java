@@ -36,4 +36,13 @@ public class Progress {
     private int progress;
 
     private boolean completed;
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+        if (progress == 100) {
+            this.completed = true;
+        } else {
+            this.completed = false;
+        }
+    }
 }
