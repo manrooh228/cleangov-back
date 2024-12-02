@@ -33,6 +33,7 @@ public class Progress {
     @JoinColumn(name = "id_task", nullable = false)
     private Tasks task;
 
+    @Column(nullable = false, columnDefinition = "int default 0")
     private int progress;
 
     private boolean completed;
