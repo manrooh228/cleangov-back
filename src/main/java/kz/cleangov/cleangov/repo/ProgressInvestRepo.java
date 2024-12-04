@@ -10,4 +10,6 @@ import kz.cleangov.cleangov.domain.ProgressInvest;
 @Repository
 public interface ProgressInvestRepo extends JpaRepository<ProgressInvest, String> {
     ProgressInvest findByUserIdAndInvestigationId(String userId, String investigationId);
+
+    List<ProgressInvest> findByUserId(String userId);
 }

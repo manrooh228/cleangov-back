@@ -25,7 +25,13 @@ public class InvestigationResource {
 
     // Получить дела с прогрессом для пользователя
     @GetMapping("/progress")
-    public List<Investigations> getInvestigationsWithProgress(@RequestParam String userId) {
-        return investigationService.getInvestigationsWithProgress(userId);
+    public List<Investigations> getTasksWithProgress(@RequestParam String userId) {
+        return investigationService.getTasksWithProgress(userId);
     }
+
+    @GetMapping("/all-with-progress")
+    public List<Investigations> getInvestigationsWithProgress(@RequestParam String userId) {
+        return investigationService.getInvestigationsWithUserProgress(userId);
+    }
+
 }
