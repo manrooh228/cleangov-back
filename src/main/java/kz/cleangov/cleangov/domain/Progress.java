@@ -34,24 +34,20 @@ public class Progress {
     @JoinColumn(name = "id_task", nullable = false)
     private Tasks task;
 
-    @Column(nullable = false, columnDefinition = "int default 0")
+    @Column(name = "progress", nullable = false)
     private int progress;
 
     private boolean completed;
 
     public void setProgress(int progress, ProgressService progressService) {
-    this.progress = progress;
-    boolean wasCompleted = this.completed;
-    if (progress == 100) {
-        this.completed = true;
-    } else {
-        this.completed = false;
+        this.progress = progress;
+        boolean wasCompleted = this.completed;
+    
+        this.completed = progress == 100;
+    
+        if (!wasCompleted && this.completed) {
+            progressService.handleCompletedProgress(this);
+        }
     }
-
-    //progress service
-    if (!wasCompleted && this.completed) {
-        progressService.handleCompletedProgress(this);
-    }
-}
 
 }

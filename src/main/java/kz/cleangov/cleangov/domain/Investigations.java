@@ -25,18 +25,4 @@ public class Investigations {
     private String name;
     private String description;
     private String level;
-
-    @Column(nullable = false, columnDefinition = "int default 0")
-    private int progress;
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean completed;
-
-    public void setProgress(int progress) {
-        this.progress = progress;
-        if (progress == 100) {
-            this.completed = true;
-        } else {
-            this.completed = false;
-        }
-    }
 }
