@@ -30,7 +30,7 @@ public class InvestigationResource {
     }
 
     @GetMapping("/all-with-progress")
-    public List<Investigations> getInvestigationsWithProgress(@RequestParam String userId) {
+    public List<InvestigationWithProgress> getInvestigationsWithProgress(@RequestParam String userId) {
         return investigationService.getInvestigationsWithUserProgress(userId);
     }
 

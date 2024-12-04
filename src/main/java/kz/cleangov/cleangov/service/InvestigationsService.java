@@ -1,7 +1,9 @@
 package kz.cleangov.cleangov.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import kz.cleangov.cleangov.domain.ProgressInvest;
 import kz.cleangov.cleangov.repo.InvestigationsRepo;
 import kz.cleangov.cleangov.repo.ProgressInvestRepo;
 import kz.cleangov.cleangov.repo.ProgressRepo;
+import kz.cleangov.cleangov.resource.InvestigationWithProgress;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -40,13 +43,28 @@ public class InvestigationsService {
             .toList();
     }
 
-    public List<Investigations> getInvestigationsWithUserProgress(String userId) {
+    // Получить расследования с прогрессом пользователя
+    public List<InvestigationWithProgress> getInvestigationsWithUserProgress(String userId) {
+        // Получаем все расследования
+        List<Investigations> allInvestigations = investigationsRepository.findAll();
+
+        // Получаем прогресс для пользователя
         List<ProgressInvest> progressList = progressInvestRepo.findByUserId(userId);
 
-        return progressList.stream()
-                .map(ProgressInvest::getInvestigation)
-                .distinct()
-                .toList();
+        // Создаем карту для быстрого поиска прогресса по Investigation ID
+        Map<String, Integer> progressMap = progressList.stream()
+                .collect(Collectors.toMap(
+                        progress -> progress.getInvestigation().getId(),
+                        ProgressInvest::getProgress
+                ));
+
+        // Преобразуем в список объектов, которые будут включать и расследования, и прогресс
+        return allInvestigations.stream()
+                .map(investigation -> {
+                    int progress = progressMap.getOrDefault(investigation.getId(), 0); // Прогресс или 0
+                    return new InvestigationWithProgress(investigation, progress); // Создаем новый объект с прогрессом
+                })
+                .collect(Collectors.toList());
     }
 
 }
