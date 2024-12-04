@@ -14,7 +14,6 @@ public class ProgressService {
 
     public void handleCompletedProgress(Progress progress) {
         if (progress.isCompleted()) {
-            // Получаем связанный Investigation через ProgressInvest
             ProgressInvest progressInvest = progressInvestRepository
                 .findByUserIdAndInvestigationId(
                     progress.getUser().getId(),
@@ -22,12 +21,9 @@ public class ProgressService {
                 );
 
             if (progressInvest != null) {
-                // Обновляем прогресс Investigation
                 int newProgress = Math.min(100, progressInvest.getProgress() + 25); // Не больше 100%
                 progressInvest.setProgress(newProgress);
                 progressInvest.setCompleted(newProgress == 100);
-
-                // Сохраняем обновления
                 progressInvestRepository.save(progressInvest);
             }
         }
