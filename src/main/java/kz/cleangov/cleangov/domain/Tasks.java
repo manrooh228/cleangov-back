@@ -27,7 +27,8 @@ public class Tasks {
     private String id;
     private String name;
     private String description;
-
+    private String tasktype; // видеоурок(video)/тест(test)/рефлексия(reflexio)
+    
     @ManyToOne
     @JoinColumn(name = "id_investigation", nullable = false)
     private Investigations investigation;
