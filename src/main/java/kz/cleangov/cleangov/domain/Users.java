@@ -26,4 +26,8 @@ public class Users {
     private String password;
     private String name;
     private String surname;
+
+    public Users(String id) {
+        this.id = id;
+    }
 }
