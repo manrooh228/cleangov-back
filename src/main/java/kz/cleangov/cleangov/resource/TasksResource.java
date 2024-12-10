@@ -23,4 +23,6 @@ public class TasksResource {
             @RequestParam String userId) {
         return tasksService.getTasksWithProgress(investigationId, userId);
     }
+
+    
 }

@@ -2,6 +2,7 @@ package kz.cleangov.cleangov.resource;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import kz.cleangov.cleangov.domain.Answers;
 import kz.cleangov.cleangov.domain.Question;
 import kz.cleangov.cleangov.domain.Test;
 import kz.cleangov.cleangov.domain.TestResult;
+import kz.cleangov.cleangov.domain.constructorClass.QuestionDTO;
 import kz.cleangov.cleangov.service.TestService;
 import lombok.RequiredArgsConstructor;
 
@@ -23,8 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class TestResource {
     private final TestService testService;
 
-    @GetMapping("/by-task")
-    public List<Test> getTestsByTask(@RequestParam Long taskId) {
+    @GetMapping("/task/{taskId}")
+    public List<Test> getTestsByTask(@PathVariable String taskId) {
         return testService.getTestsByTask(taskId);
     }
 
@@ -32,7 +34,7 @@ public class TestResource {
     public List<Question> getQuestionsByTest(@PathVariable Long testId) {
         return testService.getQuestionsByTest(testId);
     }
-
+    
     @GetMapping("/{questionId}/answers")
     public List<Answers> getAnswersByQuestion(@PathVariable Long questionId) {
         return testService.getAnswersByQuestion(questionId);
@@ -42,4 +44,12 @@ public class TestResource {
     public void saveTestResult(@RequestBody TestResult result) {
         testService.saveTestResult(result);
     }
+
+    @GetMapping("/{testId}/questions-with-answers")
+    public ResponseEntity<List<QuestionDTO>> getQuestionsWithAnswers(@PathVariable Long testId) {
+        List<QuestionDTO> questions = testService.getQuestionsWithAnswersByTestId(testId);
+        return ResponseEntity.ok(questions);
+    }
+
+
 }

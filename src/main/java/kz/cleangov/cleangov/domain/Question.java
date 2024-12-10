@@ -1,5 +1,7 @@
 package kz.cleangov.cleangov.domain;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,4 +23,7 @@ public class Question {
     @ManyToOne
     @JoinColumn(name = "test_id", nullable = false)
     private Test test;
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Answers> answers; // Связь с ответами
 }
