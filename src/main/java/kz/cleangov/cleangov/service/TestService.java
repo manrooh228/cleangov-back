@@ -80,4 +80,10 @@ public class TestService {
     return questionDTOs;
 }
 
+public Test getTestById(Long testId) {
+    // Ищем тест по ID
+    return testRepo.findById(testId)
+        .orElseThrow(() -> new RuntimeException("Test not found with id: " + testId)); // Если тест не найден, выбрасываем исключение
+}
+
 }

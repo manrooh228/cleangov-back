@@ -2,6 +2,7 @@ package kz.cleangov.cleangov.resource;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,5 +52,13 @@ public class TestResource {
         return ResponseEntity.ok(questions);
     }
 
-
+    @GetMapping("/{testId}")
+    public ResponseEntity<Test> getTestById(@PathVariable Long testId) {
+        try {
+            Test test = testService.getTestById(testId);  // Получаем тест по ID
+            return ResponseEntity.ok(test);  // Возвращаем успешный ответ с тестом
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);  // Если тест не найден, возвращаем 404
+        }
+    }
 }
