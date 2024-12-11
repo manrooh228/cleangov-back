@@ -10,7 +10,7 @@ import kz.cleangov.cleangov.domain.Progress;
 @Repository
 public interface ProgressRepo extends JpaRepository<Progress, String>{
     List<Progress> findByUserId(String userId);
-
+    Progress findByUserIdAndTaskId(String userId, String taskId);
     List<Progress> findByTaskInvestigationIdAndUserId(String investigationId, String userId);
 }
 

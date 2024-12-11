@@ -8,16 +8,19 @@ import org.springframework.stereotype.Service;
 
 import kz.cleangov.cleangov.domain.Progress;
 import kz.cleangov.cleangov.domain.Tasks;
+import kz.cleangov.cleangov.domain.Test;
 import kz.cleangov.cleangov.domain.Users;
 import kz.cleangov.cleangov.domain.constructorClass.TaskWithProgress;
 import kz.cleangov.cleangov.repo.ProgressRepo;
 import kz.cleangov.cleangov.repo.TaskRepo;
+import kz.cleangov.cleangov.repo.TestRepo;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepo tasksRepo;
+    private final TestRepo testRepo;
     private final ProgressRepo progressRepo;
 
     public List<TaskWithProgress> getTasksWithProgress(String investigationId, String userId) {
@@ -62,5 +65,11 @@ public class TaskService {
                     return new TaskWithProgress(task, progressValue);
                 })
                 .collect(Collectors.toList());
+    }
+
+    public String getTaskIdByTestId(Long testId) {
+        Test test = testRepo.findById(testId)
+                .orElseThrow(() -> new IllegalArgumentException("Test not found"));
+        return test.getTask().getId(); // Предполагаем, что `task` связан с `Test`
     }
 }
