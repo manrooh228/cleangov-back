@@ -43,7 +43,7 @@ public class TestResource {
 
     @PostMapping("/save-result")
     public void saveTestResult(@RequestBody TestResult result) {
-        testService.saveTestResult(result);
+        testService.saveTestResult(result); 
     }
 
     @GetMapping("/{testId}/questions-with-answers")
@@ -55,10 +55,10 @@ public class TestResource {
     @GetMapping("/{testId}")
     public ResponseEntity<Test> getTestById(@PathVariable Long testId) {
         try {
-            Test test = testService.getTestById(testId);  // Получаем тест по ID
-            return ResponseEntity.ok(test);  // Возвращаем успешный ответ с тестом
+            Test test = testService.getTestById(testId);
+            return ResponseEntity.ok(test);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null);  // Если тест не найден, возвращаем 404
+            return ResponseEntity.status(404).body(null);
         }
     }
 }

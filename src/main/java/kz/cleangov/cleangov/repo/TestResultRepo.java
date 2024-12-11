@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 import kz.cleangov.cleangov.domain.TestResult;
 
 @Repository
-public interface TestResultRepo extends JpaRepository<TestResult, Long> {}
+public interface TestResultRepo extends JpaRepository<TestResult, Long> {
+    TestResult findByTestIdAndUserId(Long testId, String userId);
+}
