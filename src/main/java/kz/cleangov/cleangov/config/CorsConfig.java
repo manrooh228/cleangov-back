@@ -30,7 +30,7 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:3000", "http://26.178.243.248:3000", "http://192.168.8.144:3000"));
+        config.setAllowedOrigins(List.of("http://localhost:3000", "http://26.178.243.248:3000", "http://26.178.243.248:3001", "http://192.168.13.237:3000"));
         config.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization"));
         config.setExposedHeaders(List.of("Authorization"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
