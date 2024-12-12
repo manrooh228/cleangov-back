@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "achievementTable")
+@Table(name = "achievementUserTable")
 @Getter
 @Setter
 @NoArgsConstructor

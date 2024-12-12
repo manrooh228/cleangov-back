@@ -50,6 +50,9 @@ public class ProgressService {
                 progressInvestRepository.save(progressInvest);
     
                 // Проверка и выдача ачивки
+            }
+
+            if (progressInvest.getProgress() == 100) {
                 achievementService.checkAndAwardAchievement(progress.getUser(), "The young investigator");
             }
         }

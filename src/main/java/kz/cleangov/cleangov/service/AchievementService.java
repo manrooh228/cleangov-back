@@ -9,6 +9,7 @@ import kz.cleangov.cleangov.domain.AchievementUser;
 import kz.cleangov.cleangov.domain.Users;
 import kz.cleangov.cleangov.repo.AchievementRepo;
 import kz.cleangov.cleangov.repo.AchievementUserRepo;
+import kz.cleangov.cleangov.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 
 @Service
