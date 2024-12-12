@@ -14,21 +14,19 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ProgressService {
+    private final AchievementService achievementService;
     private final ProgressInvestRepo progressInvestRepository;
     private final ProgressRepo progressRepo;
     private final UserRepo userRepo;
     private final TaskRepo taskRepo;
 
+
     public void handleCompletedProgress(Progress progress) {
         if (progress.isCompleted()) {
-            // Получаем задание
             Tasks task = progress.getTask();
             String taskType = task.getTasktype();
-            
-            // Определяем, сколько добавлять к прогрессу
             int progressIncrement = getProgressIncrement(taskType);
-
-            // Проверяем, есть ли запись в ProgressInvest для текущего пользователя и расследования
+    
             ProgressInvest progressInvest = progressInvestRepository
                 .findByUserIdAndInvestigationId(
                     progress.getUser().getId(),
@@ -36,19 +34,27 @@ public class ProgressService {
                 );
     
             if (progressInvest == null) {
-                // Создаем новый объект ProgressInvest, если его нет
                 progressInvest = new ProgressInvest();
                 progressInvest.setUser(progress.getUser());
                 progressInvest.setInvestigation(task.getInvestigation());
-                progressInvest.setProgress(0); // Начальный прогресс
-                progressInvest.setCompleted(false); // Начальное состояние "не завершено"
+                progressInvest.setProgress(0);
+                progressInvest.setCompleted(false);
             }
     
-            // Обновляем прогресс
             progressInvest.addProgress(progressIncrement);
             progressInvestRepository.save(progressInvest);
+    
+            // Проверка на прогресс 100%
+            if (progressInvest.getProgress() >= 100 && !progressInvest.isCompleted()) {
+                progressInvest.setCompleted(true);
+                progressInvestRepository.save(progressInvest);
+    
+                // Проверка и выдача ачивки
+                achievementService.checkAndAwardAchievement(progress.getUser(), "The young investigator");
+            }
         }
     }
+    
 
     private int getProgressIncrement(String taskType) {
         // Определяем, сколько процентов добавлять в зависимости от типа задания
